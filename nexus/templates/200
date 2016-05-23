@@ -1,0 +1,40 @@
+global_defs {
+    notification_email {
+        user1@primeton.com
+        user2@primeton.com
+    }
+    notification_email_from admin@primeton.com
+    smtp_server smtp.primeton.com
+    smtp_connect_timeout 30
+    router_id master_server
+}
+
+vrrp_script chk_service_script {
+    script /etc/keepalived/sbin/nexus.sh
+    interval 3
+    weight 2
+}
+
+vrrp_instance VI_master {
+    state MASTER
+    interface eth0
+    virtual_router_id 51
+    mcast_src_ip <IPAddr>
+    priority 200
+    advert_int 1
+
+    authentication {
+        auth_type PASS
+        auth_pass 12345678
+    }
+  
+    track_script {
+        chk_service_script
+    }
+  
+    virtual_ipaddress {
+        192.168.100.100/24
+        192.168.100.200/24
+    }
+
+}
