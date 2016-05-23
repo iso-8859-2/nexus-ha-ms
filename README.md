@@ -1,2 +1,4 @@
 # nexus-ha-ms
-Nexus OSS HA - Master &amp; Slave
+## Nexus OSS HA  
+  
+`Master Slave Mode`  
